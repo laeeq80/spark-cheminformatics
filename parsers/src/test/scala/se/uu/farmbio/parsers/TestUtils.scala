@@ -24,6 +24,21 @@ object TestUtils {
     out
   }
   
+  def readPDB(path: String) = {
+    val out = new ListBuffer[String]
+    var mol = ""
+    for (line <- Source.fromFile(path).getLines) {
+      if (line == "ENDMDL") {
+        mol += line
+        out += mol
+        mol = ""
+      } else {
+        mol += line + "\n"
+      }
+    }
+    out
+  }
+  
   def readSmiles(path: String) = {
     Source.fromFile(path).getLines.map(_+"\n")
   }
